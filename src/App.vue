@@ -11,12 +11,20 @@ const search = (event: AutoCompleteCompleteEvent) => {
 </script>
 
 <template>
-  <div class="m-4 flex flex-col gap-4">
-    <h1 class="text-2xl font-bold">Configurações</h1>
-    <AutoComplete variant="filled" v-model="value" :suggestions="items" @complete="search" />
+  <div class="flex">
+    <div class="m-4 flex flex-col gap-4 w-2/8">
+      <h1 class="text-2xl font-bold">Configurações</h1>
+      <AutoComplete
+        fluid
+        variant="filled"
+        v-model="value"
+        :suggestions="items"
+        @complete="search"
+      />
+      <hr />
+    </div>
+    <div class="w-5/8"><router-view /></div>
   </div>
-
-  <router-view />
 </template>
 
 <style scoped></style>
