@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import AutoComplete, { type AutoCompleteCompleteEvent } from 'primevue/autocomplete'
-import { computed, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { Button } from 'primevue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
+const isMdUp = ref(false)
 const value = ref('')
 const items = ref(['Configuração 1', 'Configuração 2', 'Configuração 3'])
 const configurations = ref([
@@ -36,11 +37,19 @@ const search = (event: AutoCompleteCompleteEvent) => {
 const isSettingsChild = computed(() => {
   return route.path.startsWith('/settings/') && route.path !== '/settings'
 })
+
+onMounted(() => {
+  const mq = window.matchMedia('(min-width: 768px)')
+  const update = () => (isMdUp.value = mq.matches)
+  update()
+  mq.addEventListener('change', update)
+  onUnmounted(() => mq.removeEventListener('change', update))
+})
 </script>
 
 <template>
   <div class="flex h-screen max-md:justify-center">
-    <div v-if="!isSettingsChild" class="m-4 flex flex-col gap-4 w-screen md:w-2/8">
+    <div v-if="!isSettingsChild || isMdUp" class="m-4 flex flex-col gap-4 w-screen md:w-2/8">
       <h1 class="text-2xl font-bold text-start text-green-400">Configurações</h1>
       <AutoComplete
         fluid
