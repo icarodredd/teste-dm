@@ -6,6 +6,7 @@ import Aura from '@primeuix/themes/aura'
 import './index.css'
 import 'primeicons/primeicons.css'
 import router from './router'
+import DialogService from 'primevue/dialogservice'
 
 const app = createApp(App)
 
@@ -18,5 +19,7 @@ app.use(PrimeVue, {
 app.use(VueQueryPlugin)
 
 app.use(router)
+
+app.use(DialogService)
 
 app.mount('#app')
