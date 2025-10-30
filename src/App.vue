@@ -21,7 +21,7 @@ const configurations = ref([
   },
   {
     name: 'Conversas',
-    description: 'Tema, papel de parede',
+    description: 'Tema, verificação ortográfica e outras preferências',
     icon: 'pi pi-comment',
     href: '/settings/chats',
   },
@@ -53,7 +53,7 @@ const search = (event: AutoCompleteCompleteEvent) => {
         variant="text"
         class="flex items-center text-left justify-start!"
       >
-        <RouterLink :to="item.href">
+        <RouterLink class="" :to="item.href">
           <div class="flex justify-between gap-4 items-stretch">
             <span :class="item.icon + ' pt-2'" />
             <div class="flex flex-col gap-1">
