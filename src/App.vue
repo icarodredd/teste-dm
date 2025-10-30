@@ -1,11 +1,45 @@
 <script setup lang="ts">
-import AutoComplete, { type AutoCompleteCompleteEvent } from 'primevue/autocomplete'
 import DynamicDialog from 'primevue/dynamicdialog'
 import { useDialog } from 'primevue/usedialog'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { Button } from 'primevue'
 import { useRoute } from 'vue-router'
 import SignOut from './components/sign-out.vue'
+import { useQuery } from '@tanstack/vue-query'
+
+export type User = {
+  id: number
+  name: string
+  username: string
+  email: string
+  address: {
+    street: string
+    suite: string
+    city: string
+    zipcode: string
+    geo: {
+      lat: string
+      lng: string
+    }
+  }
+  phone: string
+  website: string
+  company: {
+    name: string
+    catchPhrase: string
+    bs: string
+  }
+}
+
+async function fetchUsers(): Promise<User[]> {
+  const res = await fetch('https://jsonplaceholder.typicode.com/users')
+  return res.json()
+}
+
+const { data } = useQuery({
+  queryKey: ['users'],
+  queryFn: fetchUsers,
+})
 
 const route = useRoute()
 const dialog = useDialog()
@@ -14,8 +48,6 @@ const THEME_KEY = 'color-scheme'
 
 const isDark = ref(false)
 const isMdUp = ref(false)
-const value = ref('')
-const items = ref(['Configuração 1', 'Configuração 2', 'Configuração 3'])
 const configurations = ref([
   {
     name: 'Conta',
@@ -36,10 +68,6 @@ const configurations = ref([
     href: '/settings/chats',
   },
 ])
-
-const search = (event: AutoCompleteCompleteEvent) => {
-  items.value = [...Array(10).keys()].map((item) => event.query + '-' + item)
-}
 
 const applyTheme = () => {
   document.documentElement.classList.toggle('dark', isDark.value)
@@ -85,14 +113,9 @@ onMounted(() => {
           @click="toggleTheme"
         />
       </div>
+      <h1 class="text-xl text-start text-green-400">{{ data?.[0]?.name || 'Usuário' }}</h1>
 
-      <AutoComplete
-        fluid
-        variant="filled"
-        v-model="value"
-        :suggestions="items"
-        @complete="search"
-      />
+      <hr />
 
       <Button
         v-for="item in configurations"
