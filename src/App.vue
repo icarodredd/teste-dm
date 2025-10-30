@@ -10,6 +10,9 @@ import SignOut from './components/sign-out.vue'
 const route = useRoute()
 const dialog = useDialog()
 
+const THEME_KEY = 'color-scheme'
+
+const isDark = ref(false)
 const isMdUp = ref(false)
 const value = ref('')
 const items = ref(['Configuração 1', 'Configuração 2', 'Configuração 3'])
@@ -38,8 +41,27 @@ const search = (event: AutoCompleteCompleteEvent) => {
   items.value = [...Array(10).keys()].map((item) => event.query + '-' + item)
 }
 
+const applyTheme = () => {
+  document.documentElement.classList.toggle('dark', isDark.value)
+}
+
+const toggleTheme = () => {
+  isDark.value = !isDark.value
+  applyTheme()
+  localStorage.setItem(THEME_KEY, isDark.value ? 'dark' : 'light')
+}
 const isSettingsChild = computed(() => {
   return route.path.startsWith('/settings/') && route.path !== '/settings'
+})
+
+onMounted(() => {
+  const saved = localStorage.getItem(THEME_KEY)
+  if (saved === 'dark' || saved === 'light') {
+    isDark.value = saved === 'dark'
+  } else {
+    isDark.value = window.matchMedia('(prefers-color-scheme: dark)').matches
+  }
+  applyTheme()
 })
 
 onMounted(() => {
@@ -54,7 +76,16 @@ onMounted(() => {
 <template>
   <div class="flex h-screen max-md:justify-center">
     <div v-if="!isSettingsChild || isMdUp" class="m-4 flex flex-col gap-4 w-screen md:w-2/8">
-      <h1 class="text-2xl font-bold text-start text-green-400">Configurações</h1>
+      <div class="flex justify-between">
+        <h1 class="text-2xl font-bold text-start text-green-400">Configurações</h1>
+        <Button
+          :icon="isDark ? 'pi pi-sun' : 'pi pi-moon'"
+          severity="success"
+          variant="text"
+          @click="toggleTheme"
+        />
+      </div>
+
       <AutoComplete
         fluid
         variant="filled"

@@ -5,3 +5,5 @@
 * {
   font-family: 'Geist', sans-serif;
 }
+
+@custom-variant dark (&:where(.dark, .dark *));
