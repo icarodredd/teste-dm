@@ -23,6 +23,7 @@
     "@tanstack/vue-query": "^5.90.5",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",
+    "primeicons": "^7.0.0",
     "primevue": "^4.4.1",
     "tailwindcss": "^4.1.16",
     "tailwindcss-primeui": "^0.6.1",
