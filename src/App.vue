@@ -53,8 +53,8 @@ const search = (event: AutoCompleteCompleteEvent) => {
         variant="text"
         class="flex items-center text-left justify-start!"
       >
-        <RouterLink class="" :to="item.href">
-          <div class="flex justify-between gap-4 items-stretch">
+        <RouterLink class="w-full" :to="item.href">
+          <div class="flex justify-start gap-4 items-stretch">
             <span :class="item.icon + ' pt-2'" />
             <div class="flex flex-col gap-1">
               <span>{{ item.name }}</span>
