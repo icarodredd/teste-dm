@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import AutoComplete, { type AutoCompleteCompleteEvent } from 'primevue/autocomplete'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { Button } from 'primevue'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const value = ref('')
 const items = ref(['Configuração 1', 'Configuração 2', 'Configuração 3'])
-
 const configurations = ref([
   {
     name: 'Conta',
@@ -31,11 +32,15 @@ const configurations = ref([
 const search = (event: AutoCompleteCompleteEvent) => {
   items.value = [...Array(10).keys()].map((item) => event.query + '-' + item)
 }
+
+const isSettingsChild = computed(() => {
+  return route.path.startsWith('/settings/') && route.path !== '/settings'
+})
 </script>
 
 <template>
-  <div class="flex h-screen">
-    <div class="m-4 flex flex-col gap-4 w-2/8">
+  <div class="flex h-screen max-md:justify-center">
+    <div v-if="!isSettingsChild" class="m-4 flex flex-col gap-4 w-screen md:w-2/8">
       <h1 class="text-2xl font-bold text-start text-green-400">Configurações</h1>
       <AutoComplete
         fluid
@@ -66,7 +71,7 @@ const search = (event: AutoCompleteCompleteEvent) => {
         </RouterLink>
       </Button>
     </div>
-    <div class="w-6/8"><router-view /></div>
+    <div v-if="isSettingsChild" class="w-screen md:w-6/8"><router-view /></div>
   </div>
 </template>
 
