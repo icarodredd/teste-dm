@@ -23,7 +23,7 @@ const spellCheck = ref(true)
     <RouterLink to="/"> <span class="pi pi-arrow-left mx-4" /> Voltar </RouterLink>
   </Button>
   <Divider />
-  <div class="flex flex-col gap-8">
+  <div class="flex flex-col gap-8 p-4">
     <Button label="Editar Tema" @click="visible = true" severity="success" class="w-fit" />
     <Dialog v-model:visible="visible" modal header="Editar Tema" :style="{ width: '25rem' }">
       <TreeSelect

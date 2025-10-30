@@ -12,7 +12,7 @@ const checked = ref(true)
     <RouterLink to="/"> <span class="pi pi-arrow-left mx-4" /> Voltar </RouterLink>
   </Button>
   <Divider />
-  <div class="flex items-center text-left justify-start! text-green-400">
+  <div class="flex items-center text-left justify-start! text-green-400 p-4">
     <div class="flex justify-between gap-4 items-center">
       <span class="pi pi-lock" />
       <div class="flex flex-col gap-1">
