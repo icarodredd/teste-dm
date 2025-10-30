@@ -1,9 +1,38 @@
 <script setup lang="ts">
 import AutoComplete, { type AutoCompleteCompleteEvent } from 'primevue/autocomplete'
 import { ref } from 'vue'
+import { Button } from 'primevue'
 
 const value = ref('')
 const items = ref(['Configuração 1', 'Configuração 2', 'Configuração 3'])
+
+const configurations = ref([
+  {
+    name: 'Conta',
+    description: 'Notificações de segurança, informações da conta',
+    icon: 'pi pi-key',
+    href: '/settings/account',
+  },
+  {
+    name: 'Privacidade',
+    description: 'Contatos bloqueados, mensagens de visualização única',
+    icon: 'pi pi-lock',
+    href: '/settings/privacy',
+  },
+  {
+    name: 'Conversas',
+    description: 'Tema, papel de parede',
+    icon: 'pi pi-comment',
+    href: '/settings/chats',
+  },
+  {
+    name: 'Ajuda',
+    description: 'Central de ajuda, junte-se ao beta',
+    icon: 'pi pi-question-circle',
+    href: '/settings/help',
+  },
+  { name: 'Sair', icon: 'pi pi-sign-out' },
+])
 
 const search = (event: AutoCompleteCompleteEvent) => {
   items.value = [...Array(10).keys()].map((item) => event.query + '-' + item)
@@ -13,7 +42,7 @@ const search = (event: AutoCompleteCompleteEvent) => {
 <template>
   <div class="flex">
     <div class="m-4 flex flex-col gap-4 w-2/8">
-      <h1 class="text-2xl font-bold">Configurações</h1>
+      <h1 class="text-2xl font-bold text-start text-green-400">Configurações</h1>
       <AutoComplete
         fluid
         variant="filled"
@@ -21,7 +50,27 @@ const search = (event: AutoCompleteCompleteEvent) => {
         :suggestions="items"
         @complete="search"
       />
-      <hr />
+
+      <Button
+        v-for="item in configurations"
+        :key="item.name"
+        :label="item.name"
+        severity="success"
+        variant="text"
+        class="flex items-center text-left justify-start!"
+      >
+        <RouterLink :to="item.href ? item.href : '/'">
+          <div class="flex justify-between gap-4 items-stretch">
+            <span :class="item.icon + ' pt-2'" />
+            <div class="flex flex-col gap-1">
+              <span>{{ item.name }}</span>
+              <span v-if="item.description" class="text-sm text-gray-500">{{
+                item.description
+              }}</span>
+            </div>
+          </div></RouterLink
+        >
+      </Button>
     </div>
     <div class="w-5/8"><router-view /></div>
   </div>
