@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import AutoComplete, { type AutoCompleteCompleteEvent } from 'primevue/autocomplete'
+import DynamicDialog from 'primevue/dynamicdialog'
+import { useDialog } from 'primevue/usedialog'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { Button } from 'primevue'
 import { useRoute } from 'vue-router'
+import SignOut from './components/sign-out.vue'
 
 const route = useRoute()
+const dialog = useDialog()
+
 const isMdUp = ref(false)
 const value = ref('')
 const items = ref(['Configuração 1', 'Configuração 2', 'Configuração 3'])
@@ -27,7 +32,6 @@ const configurations = ref([
     icon: 'pi pi-comment',
     href: '/settings/chats',
   },
-  { name: 'Sair', icon: 'pi pi-sign-out', href: '/settings' },
 ])
 
 const search = (event: AutoCompleteCompleteEvent) => {
@@ -79,9 +83,16 @@ onMounted(() => {
           </div>
         </RouterLink>
       </Button>
+      <Button
+        icon="pi pi-sign-out"
+        label="Sair"
+        severity="success"
+        variant="text"
+        class="flex items-center text-left justify-start!"
+        @click="dialog.open(SignOut)"
+      />
+      <DynamicDialog />
     </div>
     <div v-if="isSettingsChild" class="w-screen md:w-6/8"><router-view /></div>
   </div>
 </template>
-
-<style scoped></style>
