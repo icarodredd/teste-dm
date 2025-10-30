@@ -25,13 +25,7 @@ const configurations = ref([
     icon: 'pi pi-comment',
     href: '/settings/chats',
   },
-  {
-    name: 'Ajuda',
-    description: 'Central de ajuda, junte-se ao beta',
-    icon: 'pi pi-question-circle',
-    href: '/settings/help',
-  },
-  { name: 'Sair', icon: 'pi pi-sign-out' },
+  { name: 'Sair', icon: 'pi pi-sign-out', href: '/settings' },
 ])
 
 const search = (event: AutoCompleteCompleteEvent) => {
@@ -40,7 +34,7 @@ const search = (event: AutoCompleteCompleteEvent) => {
 </script>
 
 <template>
-  <div class="flex">
+  <div class="flex h-screen">
     <div class="m-4 flex flex-col gap-4 w-2/8">
       <h1 class="text-2xl font-bold text-start text-green-400">Configurações</h1>
       <AutoComplete
@@ -59,20 +53,20 @@ const search = (event: AutoCompleteCompleteEvent) => {
         variant="text"
         class="flex items-center text-left justify-start!"
       >
-        <RouterLink :to="item.href ? item.href : '/'">
+        <RouterLink :to="item.href">
           <div class="flex justify-between gap-4 items-stretch">
             <span :class="item.icon + ' pt-2'" />
             <div class="flex flex-col gap-1">
               <span>{{ item.name }}</span>
-              <span v-if="item.description" class="text-sm text-gray-500">{{
-                item.description
-              }}</span>
+              <span v-if="item.description" class="text-sm text-gray-500"
+                >{{ item.description }}
+              </span>
             </div>
-          </div></RouterLink
-        >
+          </div>
+        </RouterLink>
       </Button>
     </div>
-    <div class="w-5/8"><router-view /></div>
+    <div class="w-6/8"><router-view /></div>
   </div>
 </template>
 
