@@ -6,6 +6,7 @@ import { Button } from 'primevue'
 import { useRoute } from 'vue-router'
 import SignOut from './components/sign-out.vue'
 import { useQuery } from '@tanstack/vue-query'
+import OptionMenu from './components/option-menu.vue'
 
 export type User = {
   id: number
@@ -117,26 +118,14 @@ onMounted(() => {
 
       <hr />
 
-      <Button
+      <OptionMenu
         v-for="item in configurations"
+        :name="item.name"
         :key="item.name"
-        :label="item.name"
-        severity="success"
-        variant="text"
-        class="flex items-center text-left justify-start!"
-      >
-        <RouterLink class="w-full" :to="item.href">
-          <div class="flex justify-start gap-4 items-stretch">
-            <span :class="item.icon + ' pt-2'" />
-            <div class="flex flex-col gap-1">
-              <span>{{ item.name }}</span>
-              <span v-if="item.description" class="text-sm text-gray-500"
-                >{{ item.description }}
-              </span>
-            </div>
-          </div>
-        </RouterLink>
-      </Button>
+        :href="item.href"
+        :description="item.description"
+        :icon="item.icon"
+      />
       <Button
         icon="pi pi-sign-out"
         label="Sair"
