@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@primeuix/themes": "^1.2.5",
+    "@storybook/addon-themes": "^10.0.2",
     "@tailwindcss/vite": "^4.1.16",
     "@tanstack/vue-query": "^5.90.5",
     "@vueuse/core": "^14.0.0",
