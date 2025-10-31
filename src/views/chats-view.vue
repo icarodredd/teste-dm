@@ -5,7 +5,8 @@ import Dialog from 'primevue/dialog'
 import TreeSelect from 'primevue/treeselect'
 import { ref } from 'vue'
 import type { TreeNode } from 'primevue/treenode'
-import ToggleSwitch from 'primevue/toggleswitch'
+
+import buttonToggle from '@/components/button-toggle.vue'
 
 const visible = ref(false)
 const selectedTheme = ref('light')
@@ -13,9 +14,6 @@ const nodes = ref<TreeNode[]>([
   { key: 'light', label: 'Light' },
   { key: 'dark', label: 'Dark' },
 ])
-const enterIsSend = ref(false)
-const emojiReplace = ref(false)
-const spellCheck = ref(true)
 </script>
 
 <template>
@@ -33,42 +31,18 @@ const spellCheck = ref(true)
         class="md:w-80 w-full"
       />
     </Dialog>
-    <div class="flex items-center text-left justify-start! text-green-400">
-      <div class="flex justify-between gap-4 items-center">
-        <div class="flex flex-col gap-1">
-          <span>Enter envia a mensagem</span>
-          <span class="text-sm text-gray-500"> Ao clicar enter, sua mensagem será enviada </span>
-        </div>
-        <div class="flex flex-col gap-1">
-          <ToggleSwitch v-model="enterIsSend" />
-        </div>
-      </div>
-    </div>
-    <div class="flex items-center text-left justify-start! text-green-400">
-      <div class="flex justify-between gap-4 items-center">
-        <div class="flex flex-col gap-1">
-          <span>Substituir texto por emoji</span>
-          <span class="text-sm text-gray-500">
-            O emoji vai substituir o texto específico digitado
-          </span>
-        </div>
-        <div class="flex flex-col gap-1">
-          <ToggleSwitch v-model="emojiReplace" />
-        </div>
-      </div>
-    </div>
-    <div class="flex items-center text-left justify-start! text-green-400">
-      <div class="flex justify-between gap-4 items-center">
-        <div class="flex flex-col gap-1">
-          <span>Verificação ortográfica</span>
-          <span class="text-sm text-gray-500">
-            O texto digitado será verificado quanto a erros ortográficos
-          </span>
-        </div>
-        <div class="flex flex-col gap-1">
-          <ToggleSwitch v-model="spellCheck" />
-        </div>
-      </div>
-    </div>
+
+    <buttonToggle
+      title="Enter envia a mensagem"
+      description="Ao clicar enter, sua mensagem será enviada"
+    />
+    <buttonToggle
+      title="Substituir texto por emoji"
+      description="O emoji vai substituir o texto específico digitado"
+    />
+    <buttonToggle
+      title="Verificação ortográfica"
+      description="O texto digitado será verificado quanto a erros ortográficos"
+    />
   </div>
 </template>
