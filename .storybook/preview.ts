@@ -1,4 +1,29 @@
 import type { Preview } from '@storybook/vue3-vite'
+import { setup } from '@storybook/vue3-vite'
+import PrimeVue from 'primevue/config'
+import Aura from '@primeuix/themes/aura'
+import '../src/index.css'
+import 'primeicons/primeicons.css'
+import router from '../src/router'
+import DialogService from 'primevue/dialogservice'
+import { VueQueryPlugin } from '@tanstack/vue-query'
+
+setup((app) => {
+  app.use(PrimeVue, {
+    theme: {
+      preset: Aura,
+      options: {
+        darkModeSelector: '.dark',
+      },
+    },
+  })
+
+  app.use(VueQueryPlugin)
+
+  app.use(router)
+
+  app.use(DialogService)
+})
 
 const preview: Preview = {
   parameters: {
