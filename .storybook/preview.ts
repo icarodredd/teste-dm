@@ -7,6 +7,7 @@ import 'primeicons/primeicons.css'
 import router from '../src/router'
 import DialogService from 'primevue/dialogservice'
 import { VueQueryPlugin } from '@tanstack/vue-query'
+import { withThemeByClassName } from '@storybook/addon-themes'
 
 setup((app) => {
   app.use(PrimeVue, {
@@ -43,5 +44,15 @@ const preview: Preview = {
   },
   tags: ['autodocs'],
 }
+
+export const decorators = [
+  withThemeByClassName({
+    themes: {
+      light: 'light',
+      dark: 'dark',
+    },
+    defaultTheme: 'light',
+  }),
+]
 
 export default preview
